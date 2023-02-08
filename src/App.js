@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React  from "react";
+import { useState} from "react";
 import "./App.css";
 
 function App() {
@@ -28,14 +29,27 @@ function App() {
             done: false,
         },
     ]);
-    const [searchValue, setSearchValue] = useState("")
+    const addTodo = (e) =>{
+      setSearch(e.target.value)
+      if(e.key === 'Enter'){
+        let t = {
+          text: search,
+          done:false
+        }
+        setTodos([t, ...todos])
+        setSearch("")
+      }
+      
+      
+    }
+    const [search, setSearch] = useState("")
     return (
         <div>
             <section className="todoapp">
                 <header className="header">
                     <h1>todos</h1>
-                    <form>
-                        <input onChange={(e)=>setSearchValue(e.target.value)} className="new-todo" placeholder="What needs to be done?" value={searchValue} autoFocus/>
+                    <form onSubmit={(e)=>e.preventDefault()}>
+                        <input type="text" value={search} onKeyDown={addTodo} onChange={(e)=>setSearch(e.target.value)} className="new-todo" placeholder="What needs to be done?" autoFocus/>
                     </form>
                 </header>
                 <section className="main">
@@ -44,7 +58,7 @@ function App() {
                     <ul className="todo-list">
                       {
                         todos.map((todo, index)=>(
-                          <li>
+                          <li key={index}>
                             <div className="view">
                                 <input className="toggle" type="checkbox" />
                                 <label>{todo.text}</label>
