@@ -16,15 +16,15 @@ function TodoItem({ todo, todos, setTodos }) {
     }
 
     return (
-        <li key={todo.id}>
+        <li key={todo.id} className={todo.done ? "completed":""}>
             <div className="view">
                 <input
                     value={todo.done}
-                    className="toggle"
+                    className={!todo.done ? "toggle":"toggle b"}
                     type="checkbox"
                     onClick={() => handleChange(todo)}
                 />
-                <label>{todo.text}</label>
+                <label >{todo.text}</label>
                 <button className="destroy" onClick={() => deleteTodo(todo.id)}></button>
             </div>
         </li>
