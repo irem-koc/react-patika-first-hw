@@ -6,6 +6,18 @@ import TodoList from "./components/TodoList";
 
 function App() {
     const [todos, setTodos] = useState([]);
+    const [first, setFirst] = useState(false)
+    const makeAllComplete = () => {
+        let updatedTodos = todos.map((todo) => {
+            if (todo.id) {
+                // setFirst(!first)
+                todo.done = !first;
+                setFirst(!first)
+            }
+            return todo;
+        })
+        setTodos(updatedTodos)
+    }
     return (
         <div>
             <section className="todoapp">
@@ -15,6 +27,7 @@ function App() {
                         id="toggle-all"
                         className="toggle-all"
                         type="checkbox"
+                        onClick={makeAllComplete}
                     />
                     <label htmlFor="toggle-all">Mark all as complete</label>
                     <TodoList todos={todos} setTodos={setTodos} />

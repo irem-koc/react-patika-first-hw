@@ -1,13 +1,10 @@
 import React from "react";
 
-function Footer() {
+function Footer({todos}) {
     return (
         <footer className="footer">
             <span className="todo-count">
-                <strong>
-                    Task number
-                </strong>{" "}
-                left
+                {todos.filter((todo)=>todo.done===false).length} left   
             </span>
             <ul className="filters">
                 <li>

@@ -1,12 +1,31 @@
 import React from "react";
 
-function TodoItem({todo}) {
+function TodoItem({ todo, todos, setTodos }) {
+    const handleChange = (tod) => {
+        let updatedTodos = todos.map((todo) => {
+            if (todo.id === tod.id) {
+                todo.done = !todo.done;
+            }
+            return todo;
+        });
+        setTodos(updatedTodos);
+    };
+    const deleteTodo = (id) =>{
+        let updatedTodos = todos.filter((todo) => todo.id !==id);
+        setTodos(updatedTodos)
+    }
+
     return (
         <li key={todo.id}>
             <div className="view">
-                <input className="toggle" type="checkbox" />
+                <input
+                    value={todo.done}
+                    className="toggle"
+                    type="checkbox"
+                    onClick={() => handleChange(todo)}
+                />
                 <label>{todo.text}</label>
-                <button className="destroy"></button>
+                <button className="destroy" onClick={() => deleteTodo(todo.id)}></button>
             </div>
         </li>
     );
