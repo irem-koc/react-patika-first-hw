@@ -7,6 +7,19 @@ import TodoList from "./components/TodoList";
 function App() {
     const [todos, setTodos] = useState([]);
     const [first, setFirst] = useState(false)
+    const [completedtodos, setCompletedTodos] = useState([]);
+    const [activetodos, setActiveTodos] = useState([]);
+    const filterTodos = (acc) => {
+        if(acc=="all"){
+            console.log("all", todos.filter((todo) => todo.id))
+        }
+        else if(acc=="completed"){
+            setCompletedTodos("completed", todos.filter((todo) => todo.done === true))
+        }
+        else if(acc=="active"){
+            setActiveTodos("active", todos.filter((todo) => todo.done === false))
+        }
+    }
     const makeAllComplete = () => {
         let updatedTodos = todos.map((todo) => {
             if (todo.id) {
@@ -32,7 +45,7 @@ function App() {
                     <label htmlFor="toggle-all">Mark all as complete</label>
                     <TodoList todos={todos} setTodos={setTodos} />
                 </section>
-                <Footer todos={todos} setTodos={setTodos} />
+                <Footer todos={todos} setTodos={setTodos} filterTodos={filterTodos} />
             </section>
         </div>
     );

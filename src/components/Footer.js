@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Footer({todos}) {
+function Footer({todos, filterTodos}) {
+    
     return (
         <footer className="footer">
             <span className="todo-count">
@@ -8,16 +9,16 @@ function Footer({todos}) {
             </span>
             <ul className="filters">
                 <li>
-                    <a>All</a>
+                    <a  href="#" onClick={() =>filterTodos("all")}>All</a>
                 </li>
                 <li>
-                    <a>Active</a>
+                    <a href="#" onClick={() =>filterTodos("active")}>Active</a>
                 </li>
                 <li>
-                    <a>Completed</a>
+                    <a href="#" onClick={() =>filterTodos("completed") }>Completed</a>
                 </li>
             </ul>
-            <button className="clear-completed">Clear completed</button>
+            <button className="clear-completed" onClick={() => console.log("clear completed")}>Clear completed</button>
         </footer>
     );
 }
