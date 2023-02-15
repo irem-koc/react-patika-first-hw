@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -6,31 +6,30 @@ import TodoList from "./components/TodoList";
 
 function App() {
     const [todos, setTodos] = useState([]);
-    const [first, setFirst] = useState(false)
-    const [completedtodos, setCompletedTodos] = useState([]);
-    const [activetodos, setActiveTodos] = useState([]);
+    const [first, setFirst] = useState(false);
+    const [filtredTodos, setFiltredTodos] = useState([]);
+    useEffect(() => {
+        setFiltredTodos(todos);
+    }, [todos]);
     const filterTodos = (acc) => {
-        if(acc=="all"){
-            console.log("all", todos.filter((todo) => todo.id))
+        if (acc == "completed") {
+            setFiltredTodos(todos.filter((todo) => todo.done === true));
+        } else if (acc == "active") {
+            setFiltredTodos(todos.filter((todo) => todo.done === false));
+        }else{
+            setFiltredTodos(todos.filter((todo) => todo.id));
         }
-        else if(acc=="completed"){
-            setCompletedTodos("completed", todos.filter((todo) => todo.done === true))
-        }
-        else if(acc=="active"){
-            setActiveTodos("active", todos.filter((todo) => todo.done === false))
-        }
-    }
+    };
     const makeAllComplete = () => {
         let updatedTodos = todos.map((todo) => {
             if (todo.id) {
-                // setFirst(!first)
                 todo.done = !first;
-                setFirst(!first)
+                setFirst(!first);
             }
             return todo;
-        })
-        setTodos(updatedTodos)
-    }
+        });
+        setTodos(updatedTodos);
+    };
     return (
         <div>
             <section className="todoapp">
@@ -43,9 +42,18 @@ function App() {
                         onClick={makeAllComplete}
                     />
                     <label htmlFor="toggle-all">Mark all as complete</label>
-                    <TodoList todos={todos} setTodos={setTodos} />
+                    <TodoList
+                    todos={todos}
+                    setTodos={setTodos}
+                        filtredTodos={filtredTodos}
+                        setFiltredTodos={setFiltredTodos}
+                    />
                 </section>
-                <Footer todos={todos} setTodos={setTodos} filterTodos={filterTodos} />
+                <Footer
+                    todos={filtredTodos}
+                    filterTodos={filterTodos}
+
+                />
             </section>
         </div>
     );

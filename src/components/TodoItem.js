@@ -1,17 +1,17 @@
 import React from "react";
 
-function TodoItem({ todo, todos, setTodos }) {
+function TodoItem({ todo, todos,setTodos, setFiltredTodos, filtredTodos }) {
     const handleChange = (tod) => {
-        let updatedTodos = todos.map((todo) => {
+        let updatedTodos = filtredTodos.map((todo) => {
             if (todo.id === tod.id) {
                 todo.done = !todo.done;
             }
             return todo;
         });
-        setTodos(updatedTodos);
+        setFiltredTodos(updatedTodos);
     };
     const deleteTodo = (id) =>{
-        let updatedTodos = todos.filter((todo) => todo.id !==id);
+        let updatedTodos = filtredTodos.filter((todo) => todo.id !==id);
         setTodos(updatedTodos)
     }
 
